@@ -1,0 +1,11 @@
+.small{
+  height: 100px;
+  width: 100px;
+  transition: width 1s, height 1s
+}
+
+.normal{
+  height: 200px;
+  width: 200px;
+  transition: width 0.3s, height 0.3s
+}
