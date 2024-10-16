@@ -10,7 +10,15 @@ import Counter from "./components/Counter.jsx";
 import Clock from "./components/Clock.jsx";
 import Stopwatch from "./components/Stopwatch.jsx";
 import AddUsingForm from "./components/AddUsingForm.jsx";
+import { useState } from "react";
 function App() {
+  //lifting up state
+  const [nameDetails, addNameDetails] = useState([]);
+  function bringStateData(data) {
+    console.log(data);
+    addNameDetails([...nameDetails, data]);
+  }
+
   return (
     <>
       <ol>
@@ -33,11 +41,15 @@ function App() {
         Ashish
       </CustomButton>
       <CustomButton onClick={() => alert("love him")}>mom</CustomButton>
-      <br></br>
+
+      <p>______________________________________________________</p>
+
       <div>
         <EventFun></EventFun>
       </div>
-      <br></br>
+
+      <p>______________________________________________________</p>
+
       <div>
         <CustomBtn2
           on2click={() => alert("knock knock")}
@@ -46,32 +58,39 @@ function App() {
           click me
         </CustomBtn2>
       </div>
-      <br></br>
+
+      <p>______________________________________________________</p>
+
       <div>
         <FormPlay></FormPlay>
       </div>
-
-      <br></br>
 
       <div>
         <FormPlay2></FormPlay2>
       </div>
 
-      <br></br>
+      <p>______________________________________________________</p>
 
       <HookUseState></HookUseState>
 
-      <br></br>
+      <p>______________________________________________________</p>
 
       <Counter></Counter>
 
-      <br></br>
+      <p>______________________________________________________</p>
 
       <Clock></Clock>
-
-      <br></br>
-
-      <AddUsingForm></AddUsingForm>
+      <p>______________________________________________________</p>
+      <h1>form, lifing up state</h1>
+      <AddUsingForm data={bringStateData}></AddUsingForm>
+      <div>
+        {nameDetails.map((data) => (
+          <h3>
+            {data.fname} {data.lname}
+          </h3>
+        ))}
+        <div></div>
+      </div>
     </>
   );
 }

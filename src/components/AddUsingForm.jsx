@@ -1,34 +1,37 @@
 import { useState } from "react";
 
-function AddUsingForm() {
-  const [add, setAdd] = useState({});
+function AddUsingForm({ data }) {
+  const intialState = { fname: "", lname: "" };
+  const [name, setName] = useState(intialState);
 
   function handleChange(e) {
-    setAdd({ ...add, [e.target.name]: e.target.value });
-    // console.log(e.target.name, e.target.value);
-    // console.log(add);
+    setName({ ...name, [e.target.name]: e.target.value });
+    // console.log(name);
   }
 
-  function handleClick(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    // console.log(add);
+    data(name);
+    setName(intialState);
   }
 
   return (
     <form>
       <input
         type="text"
-        placeholder="first-Name"
         name="fname"
+        placeholder="first name"
+        value={name.fname}
         onChange={handleChange}
-      />
+      ></input>
       <input
         type="text"
-        placeholder="last-Name"
         name="lname"
+        placeholder="last name"
+        value={name.lname}
         onChange={handleChange}
-      />
-      <button onClick={handleClick}>click me!!!</button>
+      ></input>
+      <button onClick={handleSubmit}>click me for submitting the form</button>
     </form>
   );
 }
