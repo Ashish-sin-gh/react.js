@@ -6,7 +6,7 @@ function AddUsingForm({ data }) {
 
   function handleChange(e) {
     setName({ ...name, [e.target.name]: e.target.value });
-    // console.log(name);
+    console.log(name);
   }
 
   function handleSubmit(e) {

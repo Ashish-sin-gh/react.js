@@ -11,12 +11,20 @@ import Clock from "./components/Clock.jsx";
 import Stopwatch from "./components/Stopwatch.jsx";
 import AddUsingForm from "./components/AddUsingForm.jsx";
 import { useState } from "react";
+import DropDown from "./components/DropDown.jsx";
+import DropDownDisplay from "./DropDownDisplay.jsx";
+import AddDataForm from "./components/addDataForm.jsx";
 function App() {
   //lifting up state
   const [nameDetails, addNameDetails] = useState([]);
   function bringStateData(data) {
-    console.log(data);
     addNameDetails([...nameDetails, data]);
+  }
+
+  const [countrydata, setCountryData] = useState([]);
+  function recivedCountryData(data) {
+    setCountryData([...countrydata, data]);
+    console.log(countrydata);
   }
 
   return (
@@ -91,6 +99,15 @@ function App() {
         ))}
         <div></div>
       </div>
+
+      <p>______________________________________________________</p>
+
+      <DropDown data={recivedCountryData}></DropDown>
+      <DropDownDisplay data={countrydata}></DropDownDisplay>
+
+      <p>______________________________________________________</p>
+
+      <AddDataForm></AddDataForm>
     </>
   );
 }
