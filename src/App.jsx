@@ -14,6 +14,10 @@ import { useState } from "react";
 import DropDown from "./components/DropDown.jsx";
 import DropDownDisplay from "./DropDownDisplay.jsx";
 import AddDataForm from "./components/addDataForm.jsx";
+import personalData from "./data/personalDetailsDB.js";
+import VideoForm from "./components/crudOP/VideoForm.jsx";
+import VideoList from "./components/crudOP/VideoList.jsx";
+
 function App() {
   //lifting up state
   const [nameDetails, addNameDetails] = useState([]);
@@ -25,6 +29,36 @@ function App() {
   function recivedCountryData(data) {
     setCountryData([...countrydata, data]);
     console.log(countrydata);
+  }
+
+  const [personalDetials, setPersonalDetails] = useState(personalData);
+  function personalDetailsDB(data) {
+    setPersonalDetails([...personalDetials, data]);
+    console.log(personalDetials);
+  }
+
+  const [videoAdd, setVideoAdd] = useState([]);
+  const [editableVideo, setEditableVideo] = useState(null);
+  function VideoAddition(data) {
+    setVideoAdd([...videoAdd, { ...data, id: videoAdd.length + 1 }]);
+  }
+  function deleteVideo(matchData) {
+    console.log(matchData);
+    const newVideoArray = videoAdd.filter((el) => el.id !== matchData);
+    setVideoAdd(newVideoArray);
+  }
+  function editVideo(data) {
+    const selectedVideo = videoAdd.find((el) => el.id === data);
+    // console.log(selectedVideo);
+    setEditableVideo(selectedVideo);
+    // console.log(editableVideo);
+  }
+
+  function updateVideo(data) {
+    const newVideosList = [...videoAdd];
+    const index = videoAdd.findIndex((video) => video.id === data.id);
+    newVideosList.splice(index, 1, data);
+    setVideoAdd(newVideosList);
   }
 
   return (
@@ -97,7 +131,6 @@ function App() {
             {data.fname} {data.lname}
           </h3>
         ))}
-        <div></div>
       </div>
 
       <p>______________________________________________________</p>
@@ -107,7 +140,28 @@ function App() {
 
       <p>______________________________________________________</p>
 
-      <AddDataForm></AddDataForm>
+      <AddDataForm data={personalDetailsDB}></AddDataForm>
+      {personalDetials.map((el) => (
+        <div>
+          <br></br>
+          <span>
+            {el.Pname} {el.phoneNo}
+          </span>
+        </div>
+      ))}
+
+      <p>______________________________________________________</p>
+      <h1>VIDEO CRUD</h1>
+      <VideoForm
+        VideoAddition={VideoAddition}
+        editableVideo={editableVideo}
+        updateVideo={updateVideo}
+      ></VideoForm>
+      <VideoList
+        videos={videoAdd}
+        deleteVideo={deleteVideo}
+        editVideo={editVideo}
+      ></VideoList>
     </>
   );
 }
