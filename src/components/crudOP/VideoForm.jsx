@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 
-function VideoForm({ VideoAddition, editableVideo, updateVideo }) {
+function VideoForm({
+  VideoAddition,
+  editableVideo,
+  updateVideo,
+  editableVideoNull,
+}) {
   const intialValOfVideo = { title: "", creator: "", id: 0 };
   const [videoObj, setVideoObj] = useState(intialValOfVideo);
 
@@ -12,6 +17,7 @@ function VideoForm({ VideoAddition, editableVideo, updateVideo }) {
     e.preventDefault();
     if (editableVideo) {
       updateVideo(videoObj);
+      editableVideoNull();
     } else {
       VideoAddition(videoObj);
     }

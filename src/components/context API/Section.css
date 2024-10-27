@@ -1,0 +1,9 @@
+.darkMode{
+  background-color: rgb(46, 45, 45);
+  color: wheat;
+}
+
+.lightMode{
+  background-color: wheat;
+  color: rgb(46, 45, 45);
+}

@@ -17,6 +17,12 @@ import AddDataForm from "./components/addDataForm.jsx";
 import personalData from "./data/personalDetailsDB.js";
 import VideoForm from "./components/crudOP/VideoForm.jsx";
 import VideoList from "./components/crudOP/VideoList.jsx";
+import FormForList from "./components/EditWOuseEffect/FormForList.jsx";
+import Display from "./components/EditWOuseEffect/Display.jsx";
+import SpotCursor from "./components/SpotCursor.jsx";
+import Section from "./components/context API/Section.jsx";
+import Heading from "./components/context API/Heading.jsx";
+import { ThemeContext } from "./components/context API/themeContext.js";
 
 function App() {
   //lifting up state
@@ -53,13 +59,28 @@ function App() {
     setEditableVideo(selectedVideo);
     // console.log(editableVideo);
   }
-
   function updateVideo(data) {
     const newVideosList = [...videoAdd];
     const index = videoAdd.findIndex((video) => video.id === data.id);
     newVideosList.splice(index, 1, data);
     setVideoAdd(newVideosList);
   }
+  function editableVideoNull() {
+    setEditableVideo(null);
+  }
+
+  const [list, setList] = useState([]);
+  const [selectedEditItem, setSelectedEditItem] = useState(null);
+  function getList(data) {
+    setList([...list, { ...data, id: list.length + 1 }]);
+    console.log(list);
+  }
+  function getItemToUpdate(item) {
+    const seletedItem = list.find((el) => el.id === item);
+    setSelectedEditItem(seletedItem);
+  }
+
+  const [isDark, setIsDark] = useState(true);
 
   return (
     <>
@@ -156,12 +177,57 @@ function App() {
         VideoAddition={VideoAddition}
         editableVideo={editableVideo}
         updateVideo={updateVideo}
+        editableVideoNull={editableVideoNull}
       ></VideoForm>
       <VideoList
         videos={videoAdd}
         deleteVideo={deleteVideo}
         editVideo={editVideo}
       ></VideoList>
+
+      <p>____________________________________________________</p>
+
+      <h1>Edit without UseEffect</h1>
+      <FormForList
+        getList={getList}
+        selectedEditItem={selectedEditItem}
+      ></FormForList>
+      <Display list={list}></Display>
+
+      <p>____________________________________________________</p>
+
+      <SpotCursor></SpotCursor>
+
+      <p>____________________________________________________</p>
+
+      <h1>Context API</h1>
+      <ThemeContext.Provider value={isDark ? "darkMode" : "lightMode"}>
+        <Section level={1}>
+          <button
+            onClick={() => {
+              // console.log(isDark);
+              return setIsDark(!isDark);
+            }}
+          >
+            {isDark ? "light mode" : "dark Mode"}
+          </button>
+          <Heading>Heading 1</Heading>
+          <Heading>Heading 2</Heading>
+          <Heading>Heading 3</Heading>
+
+          <Section level={2}>
+            <Heading>sub Heading 1</Heading>
+            <Heading>sub Heading 2</Heading>
+            <Heading>sub Heading 3</Heading>
+
+            <Section level={3}>
+              <Heading>sub sub Heading 1</Heading>
+              <Heading>sub sub Heading 2</Heading>
+              <Heading>sub sub Heading 3</Heading>
+            </Section>
+          </Section>
+        </Section>
+      </ThemeContext.Provider>
     </>
   );
 }
